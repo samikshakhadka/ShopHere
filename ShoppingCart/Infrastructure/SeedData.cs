@@ -12,7 +12,7 @@ namespace ShoppingCart.Infrastructure
                         if (!context.Products.Any())
                         {
                                 Category fruits = new Category { Name = "Fruits", Slug = "fruits" };
-                                Category shirts = new Category { Name = "Shirts", Slug = "shirts" };
+                                Category Vegetables = new Category { Name = "Vegetables", Slug = "Vegetables" };
 
                                 context.Products.AddRange(
                                         new Product
@@ -57,7 +57,7 @@ namespace ShoppingCart.Infrastructure
                                                 Slug = "white-shirt",
                                                 Description = "White shirt",
                                                 Price = 5.99M,
-                                                Category = shirts,
+                                                Category = Vegetables,
                                                 Image = "white shirt.jpg"
                                         },
                                         new Product
@@ -66,7 +66,7 @@ namespace ShoppingCart.Infrastructure
                                                 Slug = "black-shirt",
                                                 Description = "Black shirt",
                                                 Price = 7.99M,
-                                                Category = shirts,
+                                                Category = Vegetables,
                                                 Image = "black shirt.jpg"
                                         },
                                         new Product
@@ -75,7 +75,7 @@ namespace ShoppingCart.Infrastructure
                                                 Slug = "yellow-shirt",
                                                 Description = "Yellow shirt",
                                                 Price = 11.99M,
-                                                Category = shirts,
+                                                Category = Vegetables,
                                                 Image = "yellow shirt.jpg"
                                         },
                                         new Product
@@ -84,7 +84,7 @@ namespace ShoppingCart.Infrastructure
                                                 Slug = "grey-shirt",
                                                 Description = "Grey shirt",
                                                 Price = 12.99M,
-                                                Category = shirts,
+                                                Category = Vegetables,
                                                 Image = "grey shirt.jpg"
                                         }
                                 );
