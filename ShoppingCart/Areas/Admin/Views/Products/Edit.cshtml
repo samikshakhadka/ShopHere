@@ -1,7 +1,7 @@
 ﻿@model ShoppingCart.Models.Product
 
 @{
-        ViewData["Title"] = "Create";
+        ViewData["Title"] = "Edit";
 }
 
 <h1>Edit Product</h1>
@@ -11,6 +11,7 @@
                 <form asp-action="Edit" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                        <input type="hidden" asp-for="Id" />
                         <input type="hidden" asp-for="Image" />
 
                         <div class="form-group">
@@ -45,9 +46,9 @@
                         </div>
 
                         <div class="form-group">
-                                <label asp-for="Image" class="control-label"></label>
-                                <input asp-for="ImageUpload" class="form-control" />
-                                <img id="imgpreview" class="pt-2" />
+                                <label asp-for="ImageUpload" class="control-label"></label>
+                                <input type="file" asp-for="ImageUpload" class="form-control" id="ImageUpload" />
+                                <img id="imgpreview" class="pt-2" width="200" alt="Image Preview" />
                                 <span asp-validation-for="ImageUpload" class="text-danger"></span>
                         </div>
 
@@ -63,17 +64,28 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+        @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
 
-<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
-<script>
-        $("#ImageUpload").change(function() {
-                readURL(this);
-        });
+        <script src="https://cdn.ckeditor.com/4.24.0/standard/ckeditor.js"></script>
+        <script>
+                $("#ImageUpload").change(function () {
+                        readURL(this);
+                });
 
-        CKEDITOR.replace( 'Description' );
-</script>
+                function readURL(input) {
+                        if (input.files && input.files[0]) {
+                                var reader = new FileReader();
 
+                                reader.onload = function (e) {
+                                        $('#imgpreview').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
+                        }
+                }
+
+                CKEDITOR.replace('Description');
+        </script>
 }

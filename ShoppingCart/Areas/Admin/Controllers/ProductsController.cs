@@ -93,6 +93,46 @@ namespace ShoppingCart.Areas.Admin.Controllers
                         return View(product);
                 }
 
+                // [HttpPost]
+                // [ValidateAntiForgeryToken]
+                // public async Task<IActionResult> Edit(int id, Product product)
+                // {
+                //         ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+
+                //         if (ModelState.IsValid)
+                //         {
+                //                 product.Slug = product.Name.ToLower().Replace(" ", "-");
+
+                //                 var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
+                //                 if (slug != null)
+                //                 {
+                //                         ModelState.AddModelError("", "The product already exists.");
+                //                         return View(product);
+                //                 }
+
+                //                 if (product.ImageUpload != null)
+                //                 {
+                //                         string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
+                //                         string imageName = Guid.NewGuid().ToString() + "_" + product.ImageUpload.FileName;
+
+                //                         string filePath = Path.Combine(uploadsDir, imageName);
+
+                //                         FileStream fs = new FileStream(filePath, FileMode.Create);
+                //                         await product.ImageUpload.CopyToAsync(fs);
+                //                         fs.Close();
+
+                //                         product.Image = imageName;
+                //                 }
+
+                //                 _context.Update(product);
+                //                 await _context.SaveChangesAsync();
+
+                //                 TempData["Success"] = "The product has been edited!";
+                //         }
+
+                //         return View(product);
+                // }
+
                 [HttpPost]
                 [ValidateAntiForgeryToken]
                 public async Task<IActionResult> Edit(int id, Product product)
@@ -103,7 +143,8 @@ namespace ShoppingCart.Areas.Admin.Controllers
                         {
                                 product.Slug = product.Name.ToLower().Replace(" ", "-");
 
-                                var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
+                                // Exclude the current product from the slug check
+                                var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug && p.Id != id);
                                 if (slug != null)
                                 {
                                         ModelState.AddModelError("", "The product already exists.");
@@ -128,6 +169,7 @@ namespace ShoppingCart.Areas.Admin.Controllers
                                 await _context.SaveChangesAsync();
 
                                 TempData["Success"] = "The product has been edited!";
+                                return RedirectToAction("Index");
                         }
 
                         return View(product);
